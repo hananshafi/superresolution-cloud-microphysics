@@ -3,6 +3,7 @@
 <div align="center">
 
 [![OpenReview](https://img.shields.io/badge/OpenReview-ICLR%202026%20Workshop-blue)](https://openreview.net/forum?id=Xz7in1KpXr&invitationId=ICLR.cc/2026/Workshop/ML4RS_Main_Track/Submission29/-/Revision&referrer=%5BTasks%5D(%2Ftasks))
+[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Checkpoints-yellow)](https://huggingface.co/hanangani/cloudsr-checkpoints) [![Demo](https://img.shields.io/badge/Demo-Gradio-orange)](#hugging-face-demo)
 
 </div>
 
