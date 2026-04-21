@@ -7,7 +7,7 @@
 
 </div>
 
-#### Authors: [Hanan Gani](https://hananshafi.github.io), Guy Pulik, Daniel Rosenfeld, [Duncan Watson-Parris][https://duncanwp.github.io], [Salman Khan](https://salman-h-khan.github.io/)
+#### Authors: [Hanan Gani](https://hananshafi.github.io), Guy Pulik, Daniel Rosenfeld, [Duncan Watson-Parris](https://duncanwp.github.io), [Salman Khan](https://salman-h-khan.github.io/)
 
 <div align="left" style="margin:24px 0;">
   <img src="https://user-images.githubusercontent.com/74038190/212284115-f47cd8ff-2ffb-4b04-b5bf-4d1c14c0247f.gif"
