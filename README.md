@@ -11,6 +11,12 @@
 
 #### Authors: [Hanan Gani](https://hananshafi.github.io), Guy Pulik, Daniel Rosenfeld, [Duncan Watson-Parris](https://duncanwp.github.io), [Salman Khan](https://salman-h-khan.github.io/)
 
+<div align="center" style="margin:18px 0 10px 0;">
+  <img src="docs/assets/logos/mbzuai.png" alt="MBZUAI" height="52" style="margin:0 18px 10px 18px; vertical-align:middle;" />
+  <img src="docs/assets/logos/ucsd.svg" alt="University of California, San Diego" height="42" style="margin:0 18px 10px 18px; vertical-align:middle;" />
+  <img src="docs/assets/logos/uaerep.png" alt="UAEREP" height="52" style="margin:0 18px 10px 18px; vertical-align:middle;" />
+</div>
+
 <div align="left" style="margin:24px 0;">
   <img src="https://user-images.githubusercontent.com/74038190/212284115-f47cd8ff-2ffb-4b04-b5bf-4d1c14c0247f.gif"
        width="100%" />

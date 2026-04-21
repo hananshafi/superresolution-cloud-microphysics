@@ -85,8 +85,8 @@ h3 {
 
 h1 {
   margin: 1rem auto 0;
-  max-width: 16ch;
-  font-size: clamp(2.3rem, 5vw, 3.8rem);
+  max-width: 28ch;
+  font-size: clamp(2.2rem, 4.6vw, 3.6rem);
   line-height: 1.12;
 }
 
@@ -101,24 +101,32 @@ h3 {
 }
 
 .authors,
-.affiliations {
+.logo-strip {
   margin: 1rem auto 0;
   max-width: 54rem;
-  line-height: 1.7;
 }
 
 .authors {
   font-size: 1.05rem;
   font-weight: 600;
+  line-height: 1.7;
 }
 
-.affiliations {
-  color: #556170;
+.logo-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem 2rem;
 }
 
-.sep {
-  margin: 0 0.45rem;
-  color: #b4bac2;
+.logo-strip img {
+  max-height: 54px;
+  width: auto;
+}
+
+.logo-strip img[src$="ucsd.svg"] {
+  max-height: 42px;
 }
 
 .button-row {
@@ -258,6 +266,18 @@ code {
 
   .page {
     padding-top: 2rem;
+  }
+
+  h1 {
+    max-width: none;
+  }
+
+  .logo-strip img {
+    max-height: 44px;
+  }
+
+  .logo-strip img[src$="ucsd.svg"] {
+    max-height: 34px;
   }
 
   .button-row {
