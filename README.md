@@ -1,4 +1,4 @@
-# Cloud Microphysics Super-Resolution
+# Recovering Cloud Microstructures with Cascaded Diffusion Inversion
 
 <div align="center">
 
