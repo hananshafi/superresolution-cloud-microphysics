@@ -15,9 +15,21 @@ This repository contains the single-stage inference code used for cloud microphy
 - Python `3.10`
 - PyTorch `2.4.0`
 - `xformers==0.0.27.post2`
+- `huggingface_hub>=0.19.3,<1.0`
 - Additional dependencies from [`environment.yaml`](environment.yaml) and [`requirements.txt`](requirements.txt)
 
-If you are creating the environment from scratch:
+## Setup
+
+You can create the local conda environment in either of the following ways.
+
+Option 1: create the environment from [`environment.yaml`](environment.yaml)
+
+```bash
+conda env create -f environment.yaml
+conda activate cloudsr
+```
+
+Option 2: create the environment manually and install dependencies from [`requirements.txt`](requirements.txt)
 
 ```bash
 conda create -n cloudsr python=3.10
@@ -28,13 +40,24 @@ pip install -e ".[torch]"
 pip install -r requirements.txt
 ```
 
+If you already have a working local environment such as `invsr`, you can continue using it as long as the installed package versions remain compatible with the requirements above.
+
 ## External Assets Needed
 
 Inference and evaluation require external model assets that are not checked into this repo:
 
 - A pre-downloaded SD-Turbo model directory
 - A noise predictor checkpoint passed with `--started_ckpt_path`
-  Example placeholder: `/path/to/checkpoints/cloudsr_model_50000.pth`
+  Hosted checkpoints:
+  - SEVIRI to VIIRS: `hanangani/cloudsr-checkpoints/cloudsr_seviri_to_viirs_model_50000.pth`
+  - MSG to MTG: `hanangani/cloudsr-checkpoints/cloudsr_msg_to_mtg_model_50000.pth`
+
+Download the checkpoints locally before running inference:
+
+```bash
+hf download hanangani/cloudsr-checkpoints cloudsr_seviri_to_viirs_model_50000.pth --repo-type model --local-dir ./checkpoints
+hf download hanangani/cloudsr-checkpoints cloudsr_msg_to_mtg_model_50000.pth --repo-type model --local-dir ./checkpoints
+```
 
 On this machine, [`inference_sr.py`](inference_sr.py) will automatically use the first valid local SD-Turbo directory it finds. Some of those directories still include `InvSR` in the filesystem path because that is where the checkpoints are currently stored.
 
@@ -43,6 +66,29 @@ You can always override the detected location with `--sd_path`.
 An additional LPIPS checkpoint is only needed for training, not inference:
 
 - `vgg16_sdturbo_lpips.pth` in `weights/`
+
+## Hugging Face Demo
+
+The repository now includes a Hugging Face Space-ready Gradio app at [`app.py`](app.py).
+
+What it does:
+
+- Runs a single-image demo for both `SEVIRI -> VIIRS` and `MSG -> MTG`
+- Downloads the task-specific checkpoint from `hanangani/cloudsr-checkpoints`
+- Uses `stabilityai/sd-turbo` as the diffusion backbone
+
+Deployment notes:
+
+- Use a GPU-backed Hugging Face Space
+- The default entry point is `app.py`
+- Install dependencies from [`requirements.txt`](requirements.txt)
+- Keep `huggingface_hub` below `1.0` for compatibility with the current `transformers` and `diffusers` stack
+
+Optional Space environment variables:
+
+- `CLOUDSR_CHECKPOINT_REPO_ID`
+- `CLOUDSR_SEVIRI_TO_VIIRS_CKPT`
+- `CLOUDSR_MSG_TO_MTG_CKPT`
 
 ## Inference
 
@@ -55,7 +101,7 @@ CUDA_VISIBLE_DEVICES=6 python inference_sr.py \
   -i /share/data/drive_3/hanan/climate_data/train_data/test/seviri_128 \
   -o /share/data/drive_3/hanan/iclr2026_workshop/rgb_results_50k_ckpt \
   --num_steps 1 \
-  --started_ckpt_path /path/to/checkpoints/cloudsr_model_50000.pth
+  --started_ckpt_path ./checkpoints/cloudsr_seviri_to_viirs_model_50000.pth
 ```
 
 Useful options:
@@ -78,7 +124,7 @@ CUDA_VISIBLE_DEVICES=6 python inference_msg_to_mtg_sr.py \
   -i /share/data/drive_3/hanan/climate_data/MTG_MSG_train_data/test_LR_128 \
   -o /share/data/drive_3/hanan/iclr2026_workshop/msg_mtg/results_single_stage \
   --num_steps 1 \
-  --started_ckpt_path /path/to/checkpoints/msg_to_mtg_model_50000.pth
+  --started_ckpt_path ./checkpoints/cloudsr_msg_to_mtg_model_50000.pth
 ```
 
 Notes:
@@ -91,7 +137,7 @@ Notes:
 The following example was run on:
 
 - Input: `/share/data/drive_3/hanan/climate_data/train_data/test/seviri_128/seviri_454.png`
-- Checkpoint: `/path/to/checkpoints/cloudsr_model_50000.pth`
+- Checkpoint: `./checkpoints/cloudsr_seviri_to_viirs_model_50000.pth`
 - SD-Turbo directory: `/share/data/drive_3/hanan/InvSR/weights/models--stabilityai--sd-turbo/snapshots/b261bac6fd2cf515557d5d0707481eafa0485ec2`
 
 Run:
@@ -103,7 +149,7 @@ CUDA_VISIBLE_DEVICES=5 conda run -n cloudsr python inference_sr.py \
   --num_steps 1 \
   --color_fix rgb \
   --sd_path /share/data/drive_3/hanan/InvSR/weights/models--stabilityai--sd-turbo/snapshots/b261bac6fd2cf515557d5d0707481eafa0485ec2 \
-  --started_ckpt_path /path/to/checkpoints/cloudsr_model_50000.pth
+  --started_ckpt_path ./checkpoints/cloudsr_seviri_to_viirs_model_50000.pth
 ```
 
 Expected output:
