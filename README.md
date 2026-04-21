@@ -13,7 +13,7 @@
 
 <div align="center" style="margin:18px 0 10px 0;">
   <img src="docs/assets/logos/mbzuai.png" alt="MBZUAI" height="52" style="margin:0 18px 10px 18px; vertical-align:middle;" />
-  <img src="docs/assets/logos/ucsd.svg" alt="University of California, San Diego" height="42" style="margin:0 18px 10px 18px; vertical-align:middle;" />
+  <img src="docs/assets/logos/ucsd-full.png" alt="University of California, San Diego" height="60" style="margin:0 18px 10px 18px; vertical-align:middle;" />
   <img src="docs/assets/logos/uaerep.png" alt="UAEREP" height="52" style="margin:0 18px 10px 18px; vertical-align:middle;" />
 </div>
 

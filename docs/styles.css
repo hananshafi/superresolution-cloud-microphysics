@@ -121,12 +121,16 @@ h3 {
 }
 
 .logo-strip img {
-  max-height: 54px;
+  max-height: 38px;
+  max-width: 180px;
   width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
-.logo-strip img[src$="ucsd.svg"] {
-  max-height: 42px;
+.logo-strip img[src$="ucsd-full.png"] {
+  max-height: 48px;
+  max-width: 240px;
 }
 
 .button-row {
@@ -273,11 +277,13 @@ code {
   }
 
   .logo-strip img {
-    max-height: 44px;
+    max-height: 32px;
+    max-width: 150px;
   }
 
-  .logo-strip img[src$="ucsd.svg"] {
-    max-height: 34px;
+  .logo-strip img[src$="ucsd-full.png"] {
+    max-height: 40px;
+    max-width: 200px;
   }
 
   .button-row {
