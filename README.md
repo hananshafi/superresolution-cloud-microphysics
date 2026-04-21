@@ -16,6 +16,8 @@
 
 This repository contains the single-stage inference code used for cloud microphysics super-resolution. Model weights are intentionally not stored in this repository.
 
+The paper webpage source lives in [`docs/index.html`](docs/index.html), with GitHub Pages-ready assets under [`docs/assets/paper`](docs/assets/paper).
+
 ## Runtime Requirements
 
 - Python `3.10`

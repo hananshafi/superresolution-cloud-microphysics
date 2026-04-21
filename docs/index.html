@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recovering Cloud Microstructures with Cascaded Diffusion Inversion</title>
+    <meta
+      name="description"
+      content="Project page for Recovering Cloud Microstructures with Cascaded Diffusion Inversion, presented at the ICLR 2026 ML4RS Workshop."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#top">CloudSR Paper</a>
+        <nav class="site-nav">
+          <a href="#overview">Overview</a>
+          <a href="#method">Method</a>
+          <a href="#results">Results</a>
+          <a href="#data">Data</a>
+          <a href="#citation">Citation</a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">ICLR 2026 ML4RS Workshop</p>
+            <h1>Recovering Cloud Microstructures with Cascaded Diffusion Inversion</h1>
+            <p class="hero-text">
+              A two-stage diffusion-inversion framework for super-resolving multi-spectral cloud
+              imagery across challenging cross-sensor settings, including <strong>SEVIRI → VIIRS</strong>
+              and <strong>MSG → MTG</strong>.
+            </p>
+
+            <div class="authors">
+              <span>Hanan Gani<sup>1,3</sup></span>
+              <span>Guy Pulik<sup>2</sup></span>
+              <span>Daniel Rosenfeld<sup>2</sup></span>
+              <span>Duncan Watson-Parris<sup>3</sup></span>
+              <span>Salman Khan<sup>1</sup></span>
+            </div>
+
+            <p class="affiliations">
+              <span><sup>1</sup>Mohamed Bin Zayed University of Artificial Intelligence</span>
+              <span><sup>2</sup>Hebrew University of Jerusalem</span>
+              <span><sup>3</sup>University of California, San Diego</span>
+            </p>
+
+            <div class="hero-actions">
+              <a class="button primary" href="./assets/paper/recovering-cloud-microstructures-ml4rs2026.pdf">
+                Download Paper
+              </a>
+              <a class="button secondary" href="https://github.com/hananshafi/superresolution-cloud-microphysics">
+                Code
+              </a>
+              <a class="button secondary" href="https://huggingface.co/hanangani/cloudsr-checkpoints">
+                Checkpoints
+              </a>
+              <a
+                class="button secondary"
+                href="https://openreview.net/forum?id=Xz7in1KpXr&amp;invitationId=ICLR.cc/2026/Workshop/ML4RS_Main_Track/Submission29/-/Revision&amp;referrer=%5BTasks%5D(%2Ftasks)"
+              >
+                OpenReview
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-panel">
+            <div class="metric-card">
+              <p class="metric-label">Super-resolution factor</p>
+              <p class="metric-value">4×</p>
+            </div>
+            <div class="metric-card">
+              <p class="metric-label">Training curriculum</p>
+              <p class="metric-value">2 stages</p>
+            </div>
+            <div class="metric-card">
+              <p class="metric-label">Transfer settings</p>
+              <p class="metric-value">2 sensor pairs</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="overview" class="section">
+          <div class="section-heading">
+            <p class="kicker">Overview</p>
+            <h2>Cloud super-resolution needs more than natural-image priors</h2>
+          </div>
+
+          <div class="intro-grid">
+            <div class="intro-copy">
+              <p>
+                High-resolution cloud imagery is important for identifying fine-scale structures that
+                matter in cloud microphysics analysis and weather-modification workflows. In practice,
+                the most useful sensors do not align cleanly: geostationary systems offer rapid refresh
+                but coarse resolution, while polar-orbiting systems capture sharper detail with limited
+                revisit frequency.
+              </p>
+              <p>
+                This paper proposes a <strong>cascaded diffusion inversion</strong> strategy that separates
+                cross-sensor robustness from high-frequency structural refinement. The result is a
+                better balance of reconstruction fidelity, structural realism, and perceptual quality
+                than transformer and diffusion baselines.
+              </p>
+
+              <div class="key-points">
+                <article class="point-card">
+                  <h3>Stage 1</h3>
+                  <p>Learns real paired cross-sensor alignment under temporal and geometric mismatch.</p>
+                </article>
+                <article class="point-card">
+                  <h3>Stage 2</h3>
+                  <p>Uses HR-only self-supervision with synthetic degradations to recover cloud detail.</p>
+                </article>
+                <article class="point-card">
+                  <h3>Cascade</h3>
+                  <p>Combines both strengths to stay sharp without drifting into unreliable texture.</p>
+                </article>
+              </div>
+            </div>
+
+            <figure class="teaser-card">
+              <img
+                src="./assets/paper/overview.png"
+                alt="Two-stage cascaded diffusion inversion overview diagram"
+              />
+              <figcaption>
+                Two-stage training pipeline. Stage 1 handles cross-sensor alignment, while Stage 2
+                focuses on structural refinement from high-resolution supervision.
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section id="method" class="section">
+          <div class="section-heading">
+            <p class="kicker">Method</p>
+            <h2>A curriculum that decouples alignment from detail synthesis</h2>
+          </div>
+
+          <div class="stage-grid">
+            <article class="stage-card">
+              <span class="stage-pill">Stage 1</span>
+              <h3>Cross-sensor alignment</h3>
+              <p>
+                The first model trains on real paired <strong>SEVIRI → VIIRS</strong> and
+                <strong>MSG → MTG</strong> data. It learns a physically consistent mapping despite
+                sensor mismatch, time shift, and imperfect registration.
+              </p>
+              <ul>
+                <li>Handles degradation and inter-sensor alignment</li>
+                <li>Improves coarse structural fidelity</li>
+                <li>Builds the prior used by the second stage</li>
+              </ul>
+            </article>
+
+            <article class="stage-card">
+              <span class="stage-pill">Stage 2</span>
+              <h3>Structural refinement</h3>
+              <p>
+                The second model is trained with internally degraded high-resolution data so the
+                input-target relationship is perfectly aligned. This sharpens thin filaments, cloud
+                gaps, and convective textures without depending on noisy real-world pairings.
+              </p>
+              <ul>
+                <li>Uses HR-only self-supervision</li>
+                <li>Focuses on fine cloud structure recovery</li>
+                <li>Improves realism while staying close to the target geometry</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="abstract-panel">
+            <p class="kicker">Abstract</p>
+            <p>
+              We present a two-stage diffusion-based super-resolution framework for multi-spectral
+              cloud imagery. Stage 1 trains on real paired data to learn robust degradation handling
+              and inter-sensor alignment, while Stage 2 uses self-supervised internal downgrading of
+              high-resolution data to refine structural learning and texture synthesis. Across both
+              SEVIRI → VIIRS and MSG → MTG, the approach outperforms transformer and
+              diffusion baselines in the trade-off between reconstruction accuracy, structural fidelity,
+              and visual quality.
+            </p>
+          </div>
+        </section>
+
+        <section id="results" class="section">
+          <div class="section-heading">
+            <p class="kicker">Results</p>
+            <h2>Sharper clouds, cleaner structure, better-behaved gradients</h2>
+          </div>
+
+          <div class="results-summary">
+            <article class="summary-card">
+              <p class="summary-title">SEVIRI → VIIRS</p>
+              <p class="summary-number">21.25 dB</p>
+              <p class="summary-copy">Best PSNR, near-ideal gradient ratio (1.06), and lowest perceptual distance (0.28).</p>
+            </article>
+            <article class="summary-card">
+              <p class="summary-title">MSG → MTG</p>
+              <p class="summary-number">24.0 dB</p>
+              <p class="summary-copy">Matches the best PSNR while keeping the closest-to-ideal gradient ratio (1.03).</p>
+            </article>
+          </div>
+
+          <div class="media-grid">
+            <figure class="media-card wide">
+              <img
+                src="./assets/paper/qualitative-comparison.png"
+                alt="Qualitative comparison across SEVIRI to VIIRS and MSG to MTG settings"
+              />
+              <figcaption>
+                Qualitative comparison against SwinIR, StableSR, and SinSR. The proposed method stays
+                sharper than deterministic baselines while avoiding the artifact-heavy oversharpening
+                seen in diffusion competitors.
+              </figcaption>
+            </figure>
+
+            <figure class="media-card">
+              <img
+                src="./assets/paper/gradient-preservation.png"
+                alt="Gradient preservation ratio chart showing the benefit of cascaded training"
+              />
+              <figcaption>
+                Gradient preservation ratio. The cascaded setup moves closest to the ideal regime of 1.0.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="table-card">
+            <h3>Quantitative comparison</h3>
+            <p class="table-note">
+              PSNR is higher-is-better, gradient preservation is ideal at 1.0, and perceptual distance is lower-is-better.
+            </p>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th rowspan="2">Model</th>
+                    <th colspan="3">SEVIRI → VIIRS</th>
+                    <th colspan="3">MSG → MTG</th>
+                  </tr>
+                  <tr>
+                    <th>PSNR ↑</th>
+                    <th>Grad. ≈ 1</th>
+                    <th>Percep ↓</th>
+                    <th>PSNR ↑</th>
+                    <th>Grad. ≈ 1</th>
+                    <th>Percep ↓</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>SwinIR</td>
+                    <td>18.37</td>
+                    <td>0.19</td>
+                    <td>0.45</td>
+                    <td>15.91</td>
+                    <td>0.53</td>
+                    <td>0.75</td>
+                  </tr>
+                  <tr>
+                    <td>StableSR</td>
+                    <td>20.52</td>
+                    <td>1.72</td>
+                    <td>0.44</td>
+                    <td>18.71</td>
+                    <td>2.94</td>
+                    <td>0.42</td>
+                  </tr>
+                  <tr>
+                    <td>SinSR</td>
+                    <td>20.69</td>
+                    <td>0.46</td>
+                    <td>0.37</td>
+                    <td>24.0</td>
+                    <td>0.96</td>
+                    <td>0.30</td>
+                  </tr>
+                  <tr class="highlight-row">
+                    <td>Ours</td>
+                    <td>21.25</td>
+                    <td>1.06</td>
+                    <td>0.28</td>
+                    <td>24.0</td>
+                    <td>1.03</td>
+                    <td>0.29</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="data" class="section">
+          <div class="section-heading">
+            <p class="kicker">Data and Evaluation</p>
+            <h2>Built for real cross-sensor cloud analysis</h2>
+          </div>
+
+          <div class="data-grid">
+            <article class="data-card">
+              <h3>Benchmarks</h3>
+              <p>
+                The paper studies two operationally relevant settings:
+                <strong>SEVIRI → VIIRS</strong> and <strong>MSG → MTG</strong>.
+              </p>
+              <ul>
+                <li>SEVIRI composite uses VIS006, IR016, and IR108 as the closest VIIRS counterparts.</li>
+                <li>MSG → MTG is evaluated through channel-wise paired samples across overlapping bands.</li>
+                <li>Cross-sensor gaps include spectral response, PSF, noise, and time-shift mismatch.</li>
+              </ul>
+            </article>
+
+            <article class="data-card">
+              <h3>Training setup</h3>
+              <p>
+                Data comes from the UAE Rain Enhancement Program and targets cloud-focused
+                super-resolution rather than natural-image restoration.
+              </p>
+              <ul>
+                <li>SEVIRI → VIIRS: roughly 9k training pairs and 1k validation pairs</li>
+                <li>MSG → MTG: roughly 2250 training pairs and 500 validation pairs</li>
+                <li>Both stages were trained on Nvidia A100 40GB GPUs</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="citation" class="section citation-section">
+          <div class="section-heading">
+            <p class="kicker">Citation</p>
+            <h2>If you use this work, cite the paper</h2>
+          </div>
+
+          <div class="citation-grid">
+            <div class="citation-card">
+              <h3>BibTeX</h3>
+              <pre><code>@inproceedings{gani2026recovering,
+  title     = {Recovering Cloud Microstructures with Cascaded Diffusion Inversion},
+  author    = {Gani, Hanan and Pulik, Guy and Rosenfeld, Daniel and Watson-Parris, Duncan and Khan, Salman},
+  booktitle = {ICLR 2026 Workshop on Machine Learning for Remote Sensing (ML4RS)},
+  year      = {2026}
+}</code></pre>
+            </div>
+
+            <div class="citation-card">
+              <h3>Contact</h3>
+              <p>
+                For questions about the paper or the codebase, reach out to
+                <a href="mailto:hanan.ghani@mbzuai.ac.ae">hanan.ghani@mbzuai.ac.ae</a>
+                or
+                <a href="mailto:salman.khan@mbzuai.ac.ae">salman.khan@mbzuai.ac.ae</a>.
+              </p>
+              <p>
+                Project repository:
+                <a href="https://github.com/hananshafi/superresolution-cloud-microphysics">
+                  github.com/hananshafi/superresolution-cloud-microphysics
+                </a>
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
