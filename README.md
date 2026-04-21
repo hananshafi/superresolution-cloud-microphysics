@@ -3,7 +3,7 @@
 <div align="center">
 
 [![OpenReview](https://img.shields.io/badge/OpenReview-ICLR%202026%20Workshop-blue)](https://openreview.net/forum?id=Xz7in1KpXr&invitationId=ICLR.cc/2026/Workshop/ML4RS_Main_Track/Submission29/-/Revision&referrer=%5BTasks%5D(%2Ftasks))
-[![Webpage](https://img.shields.io/badge/Webpage-Project%20Page-0ea5a4)](docs/index.html)
+[![Webpage](https://img.shields.io/badge/Webpage-Project%20Page-0ea5a4)](https://hananshafi.github.io/superresolution-cloud-microphysics/)
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Checkpoints-yellow)](https://huggingface.co/hanangani/cloudsr-checkpoints)
 [![Demo](https://img.shields.io/badge/Demo-Gradio-orange)](#gradio-demo)
 
@@ -16,9 +16,7 @@
        width="100%" />
 </div>
 
-This repository contains the single-stage inference code used for cloud microphysics super-resolution. Model weights are intentionally not stored in this repository.
-
-The paper webpage source lives in [`docs/index.html`](docs/index.html), with GitHub Pages-ready assets under [`docs/assets/paper`](docs/assets/paper).
+This repository contains the inference code used for cloud microphysics super-resolution.
 
 ## Runtime Requirements
 
