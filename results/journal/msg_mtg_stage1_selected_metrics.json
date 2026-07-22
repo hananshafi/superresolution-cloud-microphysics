@@ -1,0 +1,68 @@
+{
+  "benchmark": "msg-mtg",
+  "ground_truth_dir": "/share/data/drive_3/hanan/climate_data/MTG_MSG_train_data/test_HR_converted",
+  "sample_count": 500,
+  "lpips_backbone": "alex",
+  "std_definition": "population",
+  "rmse_units": "normalized_[0,1]",
+  "methods": {
+    "Bicubic": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/msg_mtg/bicubic_msg_mtg_pred",
+      "metrics": {
+        "psnr": {
+          "mean": 15.600690304333199,
+          "std": 4.6382954200029625
+        },
+        "rmse": {
+          "mean": 0.19112897776645446,
+          "std": 0.10521415637960604
+        },
+        "ssim": {
+          "mean": 0.6470302701592445,
+          "std": 0.1837617577670173
+        },
+        "gradient_ratio": {
+          "mean": 0.18566583257643024,
+          "std": 0.1152842917630949
+        },
+        "lpips": {
+          "mean": 0.6168700695931911,
+          "std": 0.14972878856457258
+        },
+        "perceptual_ratio": {
+          "mean": 1.0,
+          "std": 0.0
+        }
+      }
+    },
+    "Stage1-095k": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_stage1_sweep/msg_mtg/step_095000",
+      "metrics": {
+        "psnr": {
+          "mean": 24.06161317205017,
+          "std": 4.411810655508549
+        },
+        "rmse": {
+          "mean": 0.07189265351914588,
+          "std": 0.04369062110570732
+        },
+        "ssim": {
+          "mean": 0.7720648855566978,
+          "std": 0.10223190548598823
+        },
+        "gradient_ratio": {
+          "mean": 0.8191559459148449,
+          "std": 0.20720125943160123
+        },
+        "lpips": {
+          "mean": 0.2426830976754427,
+          "std": 0.06509394795480782
+        },
+        "perceptual_ratio": {
+          "mean": 0.401510655003871,
+          "std": 0.08934167877249516
+        }
+      }
+    }
+  }
+}

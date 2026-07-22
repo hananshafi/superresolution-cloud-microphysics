@@ -1,0 +1,68 @@
+{
+  "benchmark": "seviri-viirs",
+  "ground_truth_dir": "/share/data/drive_3/hanan/climate_data/train_data/test/viirs",
+  "sample_count": 1000,
+  "lpips_backbone": "alex",
+  "std_definition": "population",
+  "rmse_units": "normalized_[0,1]",
+  "methods": {
+    "Bicubic": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/bicubuic_seviri_viirs_pred",
+      "metrics": {
+        "psnr": {
+          "mean": 21.79756422232491,
+          "std": 3.799050581743925
+        },
+        "rmse": {
+          "mean": 0.08713197700113763,
+          "std": 0.024778054149230646
+        },
+        "ssim": {
+          "mean": 0.7934080001115799,
+          "std": 0.07512373025966541
+        },
+        "gradient_ratio": {
+          "mean": 0.1810841609252922,
+          "std": 0.11904929105350798
+        },
+        "lpips": {
+          "mean": 0.4412371817193925,
+          "std": 0.16788692227636604
+        },
+        "perceptual_ratio": {
+          "mean": 1.0,
+          "std": 0.0
+        }
+      }
+    },
+    "Stage1-025k": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_stage1_selected_full/seviri_viirs/step_025000",
+      "metrics": {
+        "psnr": {
+          "mean": 20.668728213752495,
+          "std": 3.49391829760974
+        },
+        "rmse": {
+          "mean": 0.10005804697717241,
+          "std": 0.037723993296808686
+        },
+        "ssim": {
+          "mean": 0.6469241543710231,
+          "std": 0.10485702937653776
+        },
+        "gradient_ratio": {
+          "mean": 0.662446082742066,
+          "std": 0.3282308327903106
+        },
+        "lpips": {
+          "mean": 0.37798427764326337,
+          "std": 0.13358270180885243
+        },
+        "perceptual_ratio": {
+          "mean": 0.9019214406075193,
+          "std": 0.17938164894796552
+        }
+      }
+    }
+  }
+}

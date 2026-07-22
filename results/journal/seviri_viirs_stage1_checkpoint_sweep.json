@@ -1,0 +1,358 @@
+{
+  "benchmark": "seviri-viirs",
+  "ground_truth_dir": "/share/data/drive_3/hanan/iclr2026_workshop/checkpoint_selection_inputs/viirs_stride5_200",
+  "sample_count": 200,
+  "lpips_backbone": "alex",
+  "std_definition": "population",
+  "rmse_units": "normalized_[0,1]",
+  "methods": {
+    "Bicubic": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/checkpoint_selection_inputs/bicubic_seviri_stride5_200",
+      "metrics": {
+        "psnr": {
+          "mean": 21.484027789670403,
+          "std": 3.4213091257368853
+        },
+        "rmse": {
+          "mean": 0.08912027430369779,
+          "std": 0.022802110347829228
+        },
+        "ssim": {
+          "mean": 0.7875040438771248,
+          "std": 0.06951993997342941
+        },
+        "gradient_ratio": {
+          "mean": 0.1747780134687059,
+          "std": 0.11919336608825029
+        },
+        "lpips": {
+          "mean": 0.4545635886117816,
+          "std": 0.15722076628910372
+        },
+        "perceptual_ratio": {
+          "mean": 1.0,
+          "std": 0.0
+        }
+      }
+    },
+    "Stage1-005k": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_stage1_selection_200/seviri_viirs/step_005000",
+      "metrics": {
+        "psnr": {
+          "mean": 20.071059879903633,
+          "std": 2.9571526695362653
+        },
+        "rmse": {
+          "mean": 0.10493930076442932,
+          "std": 0.03426986703212689
+        },
+        "ssim": {
+          "mean": 0.6622757600247859,
+          "std": 0.10169993104690532
+        },
+        "gradient_ratio": {
+          "mean": 0.3275645863894509,
+          "std": 0.13267074953987723
+        },
+        "lpips": {
+          "mean": 0.4469572484865785,
+          "std": 0.14278601160299736
+        },
+        "perceptual_ratio": {
+          "mean": 1.0125900233890759,
+          "std": 0.10906809258231243
+        }
+      }
+    },
+    "Stage1-010k": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_stage1_selection_200/seviri_viirs/step_010000",
+      "metrics": {
+        "psnr": {
+          "mean": 20.23022203380249,
+          "std": 2.7720939554081014
+        },
+        "rmse": {
+          "mean": 0.10235866077920276,
+          "std": 0.031584777391046835
+        },
+        "ssim": {
+          "mean": 0.6708008016645909,
+          "std": 0.09538912588665853
+        },
+        "gradient_ratio": {
+          "mean": 0.32431758425531837,
+          "std": 0.2008593376763623
+        },
+        "lpips": {
+          "mean": 0.457351181153208,
+          "std": 0.14752420627928017
+        },
+        "perceptual_ratio": {
+          "mean": 1.0350196816606512,
+          "std": 0.1274698392423388
+        }
+      }
+    },
+    "Stage1-015k": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_stage1_selection_200/seviri_viirs/step_015000",
+      "metrics": {
+        "psnr": {
+          "mean": 20.23041830647822,
+          "std": 3.0708725243848964
+        },
+        "rmse": {
+          "mean": 0.10349879213961874,
+          "std": 0.03516606165482104
+        },
+        "ssim": {
+          "mean": 0.6509783121943474,
+          "std": 0.10815102465689509
+        },
+        "gradient_ratio": {
+          "mean": 0.4803277467465587,
+          "std": 0.21409430728557816
+        },
+        "lpips": {
+          "mean": 0.430211918707937,
+          "std": 0.14510134252900078
+        },
+        "perceptual_ratio": {
+          "mean": 0.967638606110117,
+          "std": 0.12272175152316842
+        }
+      }
+    },
+    "Stage1-020k": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_stage1_selection_200/seviri_viirs/step_020000",
+      "metrics": {
+        "psnr": {
+          "mean": 20.381433687480776,
+          "std": 3.398111491837075
+        },
+        "rmse": {
+          "mean": 0.10296010136485886,
+          "std": 0.03750945863334382
+        },
+        "ssim": {
+          "mean": 0.5740667289495468,
+          "std": 0.09250293169093202
+        },
+        "gradient_ratio": {
+          "mean": 1.1358654751078756,
+          "std": 0.4453417375280117
+        },
+        "lpips": {
+          "mean": 0.4182226742431521,
+          "std": 0.13774641538866006
+        },
+        "perceptual_ratio": {
+          "mean": 0.9619567926180119,
+          "std": 0.2156698952691463
+        }
+      }
+    },
+    "Stage1-025k": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_stage1_selection_200/seviri_viirs/step_025000",
+      "metrics": {
+        "psnr": {
+          "mean": 20.67464154948482,
+          "std": 3.5182000016102393
+        },
+        "rmse": {
+          "mean": 0.10010318948752413,
+          "std": 0.038034369087227834
+        },
+        "ssim": {
+          "mean": 0.645164995342493,
+          "std": 0.10452682410135944
+        },
+        "gradient_ratio": {
+          "mean": 0.648528721566128,
+          "std": 0.3286879121987517
+        },
+        "lpips": {
+          "mean": 0.3889432772621512,
+          "std": 0.12744734775281213
+        },
+        "perceptual_ratio": {
+          "mean": 0.8947101151032315,
+          "std": 0.1938362222651732
+        }
+      }
+    },
+    "Stage1-030k": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_stage1_selection_200/seviri_viirs/step_030000",
+      "metrics": {
+        "psnr": {
+          "mean": 20.452293272456696,
+          "std": 3.4954756831998277
+        },
+        "rmse": {
+          "mean": 0.1025813004311821,
+          "std": 0.03862345028560624
+        },
+        "ssim": {
+          "mean": 0.6365443086624145,
+          "std": 0.09925589790459259
+        },
+        "gradient_ratio": {
+          "mean": 0.6985477568310903,
+          "std": 0.49502057458603005
+        },
+        "lpips": {
+          "mean": 0.4060110544785857,
+          "std": 0.13651183509383003
+        },
+        "perceptual_ratio": {
+          "mean": 0.9367936294579932,
+          "std": 0.21977999455325878
+        }
+      }
+    },
+    "Stage1-035k": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_stage1_selection_200/seviri_viirs/step_035000",
+      "metrics": {
+        "psnr": {
+          "mean": 20.227859412365486,
+          "std": 3.175494109066414
+        },
+        "rmse": {
+          "mean": 0.10386346022428486,
+          "std": 0.03564023502916406
+        },
+        "ssim": {
+          "mean": 0.6074790413677692,
+          "std": 0.08586113964096712
+        },
+        "gradient_ratio": {
+          "mean": 0.861168208603849,
+          "std": 0.2731334956626602
+        },
+        "lpips": {
+          "mean": 0.4025559552386403,
+          "std": 0.13373492909576123
+        },
+        "perceptual_ratio": {
+          "mean": 0.9208471861629494,
+          "std": 0.1826926949240313
+        }
+      }
+    },
+    "Stage1-040k": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_stage1_selection_200/seviri_viirs/step_040000",
+      "metrics": {
+        "psnr": {
+          "mean": 20.3043744483235,
+          "std": 3.542156141349053
+        },
+        "rmse": {
+          "mean": 0.10450313689832372,
+          "std": 0.03944010596240308
+        },
+        "ssim": {
+          "mean": 0.6259896738827229,
+          "std": 0.09854628016817059
+        },
+        "gradient_ratio": {
+          "mean": 0.7694568783820409,
+          "std": 0.38878373760073126
+        },
+        "lpips": {
+          "mean": 0.40124359890818595,
+          "std": 0.13306712189462863
+        },
+        "perceptual_ratio": {
+          "mean": 0.9245045995133866,
+          "std": 0.19517882700610045
+        }
+      }
+    },
+    "Stage1-045k": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_stage1_selection_200/seviri_viirs/step_045000",
+      "metrics": {
+        "psnr": {
+          "mean": 20.39310770219856,
+          "std": 3.3119725927384818
+        },
+        "rmse": {
+          "mean": 0.10244351995784116,
+          "std": 0.03637489095491267
+        },
+        "ssim": {
+          "mean": 0.6143403454124927,
+          "std": 0.09274391727501174
+        },
+        "gradient_ratio": {
+          "mean": 0.8730944424544081,
+          "std": 0.40621275362191844
+        },
+        "lpips": {
+          "mean": 0.40942287173122166,
+          "std": 0.13266161500934678
+        },
+        "perceptual_ratio": {
+          "mean": 0.9425010673238563,
+          "std": 0.19947981993024155
+        }
+      }
+    },
+    "Stage1-050k": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_stage1_selection_200/seviri_viirs/step_050000",
+      "metrics": {
+        "psnr": {
+          "mean": 20.28604101720315,
+          "std": 3.1279085134023745
+        },
+        "rmse": {
+          "mean": 0.1029699795131695,
+          "std": 0.03479597979969911
+        },
+        "ssim": {
+          "mean": 0.6016983632743359,
+          "std": 0.08703357724060123
+        },
+        "gradient_ratio": {
+          "mean": 0.9207840422926594,
+          "std": 0.27853860622181004
+        },
+        "lpips": {
+          "mean": 0.4196184253878891,
+          "std": 0.1387743876623257
+        },
+        "perceptual_ratio": {
+          "mean": 0.951770723098535,
+          "std": 0.15531694292639214
+        }
+      }
+    },
+    "Stage1-055k": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_stage1_selection_200/seviri_viirs/step_055000",
+      "metrics": {
+        "psnr": {
+          "mean": 20.556877813867168,
+          "std": 3.3070060978262696
+        },
+        "rmse": {
+          "mean": 0.10047020748475542,
+          "std": 0.035332675442275564
+        },
+        "ssim": {
+          "mean": 0.6100215770304203,
+          "std": 0.08818185106353006
+        },
+        "gradient_ratio": {
+          "mean": 0.9219660525594182,
+          "std": 0.3401951240208129
+        },
+        "lpips": {
+          "mean": 0.4035844448953867,
+          "std": 0.13110614606379536
+        },
+        "perceptual_ratio": {
+          "mean": 0.9199650985652142,
+          "std": 0.13964866751256402
+        }
+      }
+    }
+  }
+}
