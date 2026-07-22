@@ -1,0 +1,97 @@
+{
+  "benchmark": "seviri-viirs",
+  "ground_truth_dir": "/share/data/drive_3/hanan/climate_data/train_data/test/viirs",
+  "sample_count": 1000,
+  "lpips_backbone": "alex",
+  "std_definition": "population",
+  "rmse_units": "normalized_[0,1]",
+  "methods": {
+    "Bicubic": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/bicubuic_seviri_viirs_pred",
+      "metrics": {
+        "psnr": {
+          "mean": 21.79756422232491,
+          "std": 3.799050581743925
+        },
+        "rmse": {
+          "mean": 0.08713197700113763,
+          "std": 0.024778054149230646
+        },
+        "ssim": {
+          "mean": 0.7934080001115799,
+          "std": 0.07512373025966541
+        },
+        "gradient_ratio": {
+          "mean": 0.1810841609522482,
+          "std": 0.11904929104620149
+        },
+        "lpips": {
+          "mean": 0.44123716235533356,
+          "std": 0.16788689831444478
+        },
+        "perceptual_ratio": {
+          "mean": 1.0,
+          "std": 0.0
+        }
+      }
+    },
+    "K1": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_ablation/seviri_stage2_100k_k1",
+      "metrics": {
+        "psnr": {
+          "mean": 21.25301623009442,
+          "std": 2.947740792578086
+        },
+        "rmse": {
+          "mean": 0.09070269294426195,
+          "std": 0.023127588011735915
+        },
+        "ssim": {
+          "mean": 0.7029741055965424,
+          "std": 0.09337310572387876
+        },
+        "gradient_ratio": {
+          "mean": 0.6736102101023278,
+          "std": 0.10912128350255147
+        },
+        "lpips": {
+          "mean": 0.30928807708062234,
+          "std": 0.12565432743881444
+        },
+        "perceptual_ratio": {
+          "mean": 0.6872709920481248,
+          "std": 0.11732629156804411
+        }
+      }
+    },
+    "K5": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/journal_ablation/seviri_stage2_100k_k5",
+      "metrics": {
+        "psnr": {
+          "mean": 20.7015691777811,
+          "std": 2.953515592447028
+        },
+        "rmse": {
+          "mean": 0.09669376461062376,
+          "std": 0.024885979411359088
+        },
+        "ssim": {
+          "mean": 0.6415482221543789,
+          "std": 0.12287884305242476
+        },
+        "gradient_ratio": {
+          "mean": 1.0440496845376062,
+          "std": 0.21908279420453589
+        },
+        "lpips": {
+          "mean": 0.33005666873045264,
+          "std": 0.13198014646526882
+        },
+        "perceptual_ratio": {
+          "mean": 0.7391608053206541,
+          "std": 0.15495476635999544
+        }
+      }
+    }
+  }
+}

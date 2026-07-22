@@ -1,0 +1,27 @@
+{
+  "device": "NVIDIA A100-PCIE-40GB",
+  "num_images": 50,
+  "num_steps_per_pass": 1,
+  "input_shape": [
+    1,
+    3,
+    128,
+    128
+  ],
+  "model_load_seconds": 10.672933500260115,
+  "peak_memory_gib": 3.289621353149414,
+  "stage1_checkpoint": "/share/data/drive_3/hanan/InvSR/mtg_msg_paired/2026-01-13-07-55/ckpts/model_50000.pth",
+  "stage2_checkpoint": "/share/data/drive_3/hanan/InvSR/msg_mtg_init_paired/2026-01-16-07-23/ckpts/model_50000.pth",
+  "single_pass": {
+    "mean_ms": 119.25157913208008,
+    "std_ms": 1.3245467073090496,
+    "median_ms": 119.2442855834961,
+    "images_per_second": 8.385633190587983
+  },
+  "cascaded": {
+    "mean_ms": 237.7161328125,
+    "std_ms": 4.770299487080038,
+    "median_ms": 236.9479751586914,
+    "images_per_second": 4.2066980821564846
+  }
+}

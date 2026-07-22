@@ -1,0 +1,300 @@
+{
+  "benchmark": "msg-mtg",
+  "ground_truth_dir": "/share/data/drive_3/hanan/climate_data/MTG_MSG_train_data/test_HR_converted",
+  "sample_count": 500,
+  "lpips_backbone": "alex",
+  "std_definition": "population",
+  "rmse_units": "normalized_[0,1]",
+  "methods": {
+    "Bicubic": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/msg_mtg/bicubic_msg_mtg_pred",
+      "metrics": {
+        "psnr": {
+          "mean": 15.600690304333199,
+          "std": 4.6382954200029625
+        },
+        "rmse": {
+          "mean": 0.19112897776645446,
+          "std": 0.10521415637960604
+        },
+        "ssim": {
+          "mean": 0.6470302701592445,
+          "std": 0.1837617577670173
+        },
+        "gradient_ratio": {
+          "mean": 0.1856658326527455,
+          "std": 0.11528429201693652
+        },
+        "lpips": {
+          "mean": 0.6168701321184635,
+          "std": 0.14972878793074113
+        },
+        "perceptual_ratio": {
+          "mean": 1.0,
+          "std": 0.0
+        }
+      }
+    },
+    "SwinIR": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/msg_mtg/swinir_classical_sr_x4",
+      "metrics": {
+        "psnr": {
+          "mean": 15.91738241842261,
+          "std": 1.880085688764434
+        },
+        "rmse": {
+          "mean": 0.16363421881848747,
+          "std": 0.033900256025030606
+        },
+        "ssim": {
+          "mean": 0.598987346291542,
+          "std": 0.14338201063027153
+        },
+        "gradient_ratio": {
+          "mean": 0.5363964581494454,
+          "std": 0.14065165040776442
+        },
+        "lpips": {
+          "mean": 0.7534051156640053,
+          "std": 0.08141936225219434
+        },
+        "perceptual_ratio": {
+          "mean": 1.2855116339192274,
+          "std": 0.2923443009094908
+        }
+      }
+    },
+    "StableSR-a": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/msg_mtg/stablesr_output",
+      "metrics": {
+        "psnr": {
+          "mean": 8.927094001635094,
+          "std": 3.9946442763142556
+        },
+        "rmse": {
+          "mean": 0.3936072081102076,
+          "std": 0.16176068746352879
+        },
+        "ssim": {
+          "mean": 0.5145951268523932,
+          "std": 0.19178543863555225
+        },
+        "gradient_ratio": {
+          "mean": 0.09497721010298858,
+          "std": 0.16614005500985432
+        },
+        "lpips": {
+          "mean": 0.7648787904381752,
+          "std": 0.14886436711206275
+        },
+        "perceptual_ratio": {
+          "mean": 1.2675470060162333,
+          "std": 0.20215746383473873
+        }
+      }
+    },
+    "StableSR-b": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/msg_mtg/stablesr_output_2",
+      "metrics": {
+        "psnr": {
+          "mean": 18.761256999737377,
+          "std": 2.431841215827913
+        },
+        "rmse": {
+          "mean": 0.12000899352748567,
+          "std": 0.035586655201664485
+        },
+        "ssim": {
+          "mean": 0.45979289084672925,
+          "std": 0.11725727226595248
+        },
+        "gradient_ratio": {
+          "mean": 2.942012222485344,
+          "std": 0.9317946773089281
+        },
+        "lpips": {
+          "mean": 0.42930702248215674,
+          "std": 0.07341385386489759
+        },
+        "perceptual_ratio": {
+          "mean": 0.7496919322680425,
+          "std": 0.2725627011936399
+        }
+      }
+    },
+    "SinSR-a": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/msg_mtg/sinsr_output",
+      "metrics": {
+        "psnr": {
+          "mean": 11.190361278321863,
+          "std": 2.4524840525511635
+        },
+        "rmse": {
+          "mean": 0.2862907303944932,
+          "std": 0.07493731331265797
+        },
+        "ssim": {
+          "mean": 0.5161907106637955,
+          "std": 0.15073369610810272
+        },
+        "gradient_ratio": {
+          "mean": 0.04614572850570409,
+          "std": 0.024539788842816337
+        },
+        "lpips": {
+          "mean": 0.8110747649073601,
+          "std": 0.08048909281993206
+        },
+        "perceptual_ratio": {
+          "mean": 1.3802550443513146,
+          "std": 0.2901767699842302
+        }
+      }
+    },
+    "SinSR-b": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/msg_mtg/sinsr_output_2",
+      "metrics": {
+        "psnr": {
+          "mean": 24.29232816749083,
+          "std": 4.16869067599693
+        },
+        "rmse": {
+          "mean": 0.06907175221387159,
+          "std": 0.04064629603112773
+        },
+        "ssim": {
+          "mean": 0.6894777038097382,
+          "std": 0.13580432090753136
+        },
+        "gradient_ratio": {
+          "mean": 0.9657866168425158,
+          "std": 0.23296896156178853
+        },
+        "lpips": {
+          "mean": 0.29893439704924823,
+          "std": 0.09291474127027495
+        },
+        "perceptual_ratio": {
+          "mean": 0.4881786559583707,
+          "std": 0.11424016509167916
+        }
+      }
+    },
+    "InvSR-zero-shot": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/msg_mtg/results_invsr_zeroshot",
+      "metrics": {
+        "psnr": {
+          "mean": 21.077112362403103,
+          "std": 3.1053491683083196
+        },
+        "rmse": {
+          "mean": 0.0944824053507514,
+          "std": 0.038936300046715784
+        },
+        "ssim": {
+          "mean": 0.6014295313358307,
+          "std": 0.10971801197902446
+        },
+        "gradient_ratio": {
+          "mean": 1.7418886151505795,
+          "std": 0.4260916888766654
+        },
+        "lpips": {
+          "mean": 0.3211120648980141,
+          "std": 0.05361556500091236
+        },
+        "perceptual_ratio": {
+          "mean": 0.552970746345854,
+          "std": 0.1657322942422096
+        }
+      }
+    },
+    "Stage1": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/msg_mtg/results_invsr_ours_stage1",
+      "metrics": {
+        "psnr": {
+          "mean": 23.82878792572992,
+          "std": 4.419064150119188
+        },
+        "rmse": {
+          "mean": 0.07379365400255412,
+          "std": 0.044494091468806646
+        },
+        "ssim": {
+          "mean": 0.7684546491503715,
+          "std": 0.10219044771560215
+        },
+        "gradient_ratio": {
+          "mean": 0.8556110692721901,
+          "std": 0.20757825291656665
+        },
+        "lpips": {
+          "mean": 0.2427657561302185,
+          "std": 0.06569060186103125
+        },
+        "perceptual_ratio": {
+          "mean": 0.40212558796456493,
+          "std": 0.09432854846623041
+        }
+      }
+    },
+    "Stage2": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/msg_mtg/results_invsr_ours_stage2",
+      "metrics": {
+        "psnr": {
+          "mean": 23.526183785684925,
+          "std": 3.7697638707953858
+        },
+        "rmse": {
+          "mean": 0.07393472741512123,
+          "std": 0.04044491698235015
+        },
+        "ssim": {
+          "mean": 0.7332840299010277,
+          "std": 0.10564671094174125
+        },
+        "gradient_ratio": {
+          "mean": 0.8772988062456266,
+          "std": 0.25083733753678394
+        },
+        "lpips": {
+          "mean": 0.295301903128624,
+          "std": 0.090424814889376
+        },
+        "perceptual_ratio": {
+          "mean": 0.4903570914001805,
+          "std": 0.12719647229558306
+        }
+      }
+    },
+    "Cascaded": {
+      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/msg_mtg/results_invsr_ours_cascaded",
+      "metrics": {
+        "psnr": {
+          "mean": 21.583685738243343,
+          "std": 3.7698454214510098
+        },
+        "rmse": {
+          "mean": 0.09203391906498484,
+          "std": 0.046236446522169995
+        },
+        "ssim": {
+          "mean": 0.6859622309207917,
+          "std": 0.11157606370517227
+        },
+        "gradient_ratio": {
+          "mean": 1.037638080206069,
+          "std": 0.31060252108806524
+        },
+        "lpips": {
+          "mean": 0.35175395683944227,
+          "std": 0.08046578597046423
+        },
+        "perceptual_ratio": {
+          "mean": 0.5887912315925024,
+          "std": 0.13203795903561438
+        }
+      }
+    }
+  }
+}
