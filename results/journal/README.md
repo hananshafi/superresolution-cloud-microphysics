@@ -19,6 +19,13 @@ matching across the complete validation sets: 1,000 SEVIRI-to-VIIRS pairs and
   double-weighting pixel distortion with PSNR.
 - `*_stage1_selected_metrics.{json,csv}` contains the selected checkpoint's
   final metrics on the complete validation set used in the manuscript.
+- `msg_mtg_stage2_checkpoint_sweep.{json,csv}` records the full 5k--105k
+  Stage 2 sweep over all 500 pairs, and
+  `msg_mtg_stage2_checkpoint_selection.json` records the balanced-rank result.
+  The selected 35k checkpoint supplies every MSG-to-MTG metric reported for
+  the proposed method; metrics are never combined across checkpoints.
+- `msg_mtg_stage2_35k_runtime_k{1,5}.json` contains uncontended A100 timing
+  measurements for the selected checkpoint over 50 preloaded crops.
 
 Metrics are per-image PSNR, normalized RMSE, SSIM, luminance Sobel-gradient
 ratio, and raw AlexNet LPIPS. Reported standard deviations are population
