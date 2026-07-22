@@ -266,35 +266,6 @@
           "std": 0.12719647229558306
         }
       }
-    },
-    "Cascaded": {
-      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/msg_mtg/results_invsr_ours_cascaded",
-      "metrics": {
-        "psnr": {
-          "mean": 21.583685738243343,
-          "std": 3.7698454214510098
-        },
-        "rmse": {
-          "mean": 0.09203391906498484,
-          "std": 0.046236446522169995
-        },
-        "ssim": {
-          "mean": 0.6859622309207917,
-          "std": 0.11157606370517227
-        },
-        "gradient_ratio": {
-          "mean": 1.037638080206069,
-          "std": 0.31060252108806524
-        },
-        "lpips": {
-          "mean": 0.35175395683944227,
-          "std": 0.08046578597046423
-        },
-        "perceptual_ratio": {
-          "mean": 0.5887912315925024,
-          "std": 0.13203795903561438
-        }
-      }
     }
   }
 }

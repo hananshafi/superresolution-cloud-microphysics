@@ -208,35 +208,6 @@
           "std": 0.11732629156804411
         }
       }
-    },
-    "Cascaded": {
-      "prediction_dir": "/share/data/drive_3/hanan/iclr2026_workshop/seviri_viirs/results_invsr_ours_cascaded",
-      "metrics": {
-        "psnr": {
-          "mean": 15.207752144322624,
-          "std": 2.6589715461045103
-        },
-        "rmse": {
-          "mean": 0.180770368255688,
-          "std": 0.044893898589402306
-        },
-        "ssim": {
-          "mean": 0.4955819067656994,
-          "std": 0.11135594835312489
-        },
-        "gradient_ratio": {
-          "mean": 2.6758450355868093,
-          "std": 3.9331732210696324
-        },
-        "lpips": {
-          "mean": 0.48422446015477183,
-          "std": 0.15749952927249913
-        },
-        "perceptual_ratio": {
-          "mean": 1.5175994887803812,
-          "std": 2.1855385713889652
-        }
-      }
     }
   }
 }
