@@ -4,11 +4,61 @@ from torchvision.transforms.functional import normalize
 
 from basicsr.data.data_util import paired_paths_from_folder, paired_paths_from_lmdb
 from basicsr.data.transforms import augment, paired_random_crop
-from basicsr.utils import FileClient, imfrombytes, img2tensor
+from basicsr.utils import FileClient, img2tensor
 from basicsr.utils.registry import DATASET_REGISTRY
 import io
 from PIL import Image
 import numpy as np
+
+
+def _decode_rgb_float(content, size=None):
+    """Decode uint8/uint16 imagery as RGB float32 without per-image scaling."""
+    with Image.open(io.BytesIO(content)) as image:
+        if size is not None:
+            image = image.resize(size, Image.Resampling.BICUBIC)
+
+        if image.mode.startswith("I") or image.mode == "F":
+            image_array = np.asarray(image)
+            if image_array.ndim == 2:
+                image_array = np.repeat(image_array[:, :, None], 3, axis=2)
+        else:
+            image_array = np.asarray(image.convert("RGB"))
+
+    if np.issubdtype(image_array.dtype, np.integer):
+        if image_array.dtype == np.uint8:
+            denominator = 255.0
+        elif image_array.dtype == np.uint16:
+            denominator = 65535.0
+        elif image_array.min() >= 0 and image_array.max() <= 65535:
+            denominator = 65535.0
+        else:
+            denominator = float(np.iinfo(image_array.dtype).max)
+        image_array = image_array.astype(np.float32) / denominator
+    else:
+        image_array = image_array.astype(np.float32)
+
+    return np.ascontiguousarray(np.clip(image_array, 0.0, 1.0))
+
+
+def _paired_center_crop(img_gt, img_lq, gt_size, scale, gt_path):
+    """Center-crop aligned GT/LQ arrays using scale-aligned GT coordinates."""
+    height, width = img_gt.shape[:2]
+    if height < gt_size or width < gt_size:
+        raise ValueError(
+            f"GT image {gt_path} is smaller than gt_size={gt_size}: "
+            f"{width}x{height}"
+        )
+
+    top = ((height - gt_size) // 2 // scale) * scale
+    left = ((width - gt_size) // 2 // scale) * scale
+    lq_size = gt_size // scale
+    img_gt = img_gt[top : top + gt_size, left : left + gt_size]
+    img_lq = img_lq[
+        top // scale : top // scale + lq_size,
+        left // scale : left // scale + lq_size,
+    ]
+    return img_gt, img_lq
+
 
 @DATASET_REGISTRY.register(suffix='basicsr')
 class RealESRGANPairedDataset(data.Dataset):
@@ -71,36 +121,46 @@ class RealESRGANPairedDataset(data.Dataset):
             # it will scan the whole folder to get meta info
             # it will be time-consuming for folders with too many files. It is recommended using an extra meta txt file
             self.paths = paired_paths_from_folder([self.lq_folder, self.gt_folder], ['lq', 'gt'], self.filename_tmpl)
-        self.mode = "training"
+        self.mode = mode
 
     def __getitem__(self, index):
         if self.file_client is None:
             self.file_client = FileClient(self.io_backend_opt.pop('type'), **self.io_backend_opt)
 
-        scale = 4
+        scale = int(self.opt.get('scale', 4))
 
-        # Load gt and lq images. Dimension order: HWC; channel order: BGR;
+        # Load gt and lq images. Dimension order: HWC; channel order: RGB;
         # image range: [0, 1], float32.
         gt_path = self.paths[index]['gt_path']
         img_bytes = self.file_client.get(gt_path, 'gt')
-        img_gt = imfrombytes(img_bytes, float32=True)
+        img_gt = _decode_rgb_float(img_bytes)
         lq_path = self.paths[index]['lq_path']
         img_bytes = self.file_client.get(lq_path, 'lq')
-        img_lq = Image.open(io.BytesIO(img_bytes)).convert('RGB')
-        img_lq = img_lq.resize((128, 128), Image.BICUBIC)
-        img_lq = np.asarray(img_lq).astype('float32') / 255.0
-        #img_lq = imfrombytes(img_bytes, float32=True)
+        lq_size = (img_gt.shape[1] // scale, img_gt.shape[0] // scale)
+        img_lq = _decode_rgb_float(img_bytes, size=lq_size)
 
-        # augmentation for training
+        # Stage 1 configs disable random crop, flip, and rotation.
         if self.mode == 'training':
             gt_size = self.opt['gt_size']
-            # random crop
-            img_gt, img_lq = paired_random_crop(img_gt, img_lq, gt_size, scale, gt_path)
-            # flip, rotation
-            img_gt, img_lq = augment([img_gt, img_lq], self.opt['use_hflip'], self.opt['use_rot'])
+            if self.opt.get('random_crop', False):
+                img_gt, img_lq = paired_random_crop(
+                    img_gt, img_lq, gt_size, scale, gt_path
+                )
+            else:
+                img_gt, img_lq = _paired_center_crop(
+                    img_gt, img_lq, gt_size, scale, gt_path
+                )
+            if self.opt.get('use_hflip', False) or self.opt.get('use_rot', False):
+                img_gt, img_lq = augment(
+                    [img_gt, img_lq],
+                    self.opt.get('use_hflip', False),
+                    self.opt.get('use_rot', False),
+                )
 
-        # BGR to RGB, HWC to CHW, numpy to tensor
-        img_gt, img_lq = img2tensor([img_gt, img_lq], bgr2rgb=True, float32=True)
+        # HWC to CHW, numpy to tensor. Arrays are already RGB.
+        img_gt, img_lq = img2tensor(
+            [img_gt, img_lq], bgr2rgb=False, float32=True
+        )
         # normalize
         if self.mean is not None or self.std is not None:
             normalize(img_lq, self.mean, self.std, inplace=True)

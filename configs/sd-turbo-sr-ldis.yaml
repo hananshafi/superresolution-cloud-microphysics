@@ -1,5 +1,6 @@
+# Stage 2: initialize from Stage 1 and train on augmented HR-only VIIRS.
 trainer:
-  target: trainer.TrainerSDTurboSR
+  target: training.trainers.Stage2Trainer
 
 sd_pipe:
   target: diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion.StableDiffusionPipeline
@@ -130,6 +131,7 @@ discriminator:
     addition_embed_type_num_heads: 64
 
 degradation:
+  enabled: True
   sf: 4
   # the first degradation process
   resize_prob: [0.2, 0.7, 0.1]  # up, down, keep
@@ -210,6 +212,7 @@ data:
       recursive: False
 
 train:
+  stage: 2
   # predict started inverser
   start_mode: True
   # learning rate

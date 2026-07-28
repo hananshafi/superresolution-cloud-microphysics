@@ -2,14 +2,16 @@
 # -*- coding:utf-8 -*-
 # Power by Zongsheng Yue 2023-10-26 20:20:36
 
-import warnings
-warnings.filterwarnings("ignore")
-
 import argparse
+import warnings
+
 from omegaconf import OmegaConf
 
 from utils.util_common import get_obj_from_str
 from utils.util_opts import str2bool
+
+warnings.filterwarnings("ignore")
+
 
 def get_parser(**parser_kwargs):
     parser = argparse.ArgumentParser(**parser_kwargs)
@@ -57,6 +59,12 @@ def get_parser(**parser_kwargs):
             default='False',
             help="Text Prompt",
             )
+    parser.add_argument(
+            "--init_ckpt",
+            type=str,
+            default="",
+            help="Optional model initialization checkpoint (required when overriding the Stage 2 prior)",
+            )
     args = parser.parse_args()
 
     return args
@@ -72,6 +80,8 @@ if __name__ == "__main__":
     if args.llpips > 0:
         configs.train.loss_coef.llpips = args.llpips
     configs.train.use_text = args.use_text
+    if args.init_ckpt:
+        configs.model.ckpt_path = args.init_ckpt
 
     # merge args to config
     for key in vars(args):

@@ -1,5 +1,6 @@
+# Stage 2: initialize from Stage 1 and train on augmented HR-only MTG.
 trainer:
-  target: trainer.TrainerSDTurboSR
+  target: training.trainers.Stage2Trainer
 
 sd_pipe:
   target: diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion.StableDiffusionPipeline
@@ -130,6 +131,7 @@ discriminator:
     addition_embed_type_num_heads: 64
 
 degradation:
+  enabled: True
   sf: 4
   # the first degradation process
   resize_prob: [0.2, 0.7, 0.1]  # up, down, keep
@@ -166,7 +168,7 @@ data:
           moment_path: ~
           text_path: ~
           im_ext: png
-          length: 2500
+          length: 2250
       max_token_length: 77   # 77
       io_backend:
         type: disk
@@ -195,7 +197,7 @@ data:
   val:
     type: base
     params:
-      dir_path: /share/data/drive_3/hanan/climate_data/MTG_MSG_train_data/test_LR
+      dir_path: /share/data/drive_3/hanan/climate_data/MTG_MSG_train_data/test_LR_128
       transform_type: default
       transform_kwargs:
           mean: 0.0
@@ -210,6 +212,7 @@ data:
       recursive: False
 
 train:
+  stage: 2
   # predict started inverser
   start_mode: True
   # learning rate

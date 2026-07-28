@@ -1,0 +1,8 @@
+dask==2025.11.0
+imageio==2.37.0
+netCDF4==1.7.3
+numpy==1.26.4
+Pillow==11.0.0
+pyresample==1.31.0
+satpy==0.59.0
+xarray==2025.6.1

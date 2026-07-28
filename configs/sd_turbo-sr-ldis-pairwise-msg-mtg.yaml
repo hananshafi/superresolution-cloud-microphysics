@@ -1,5 +1,6 @@
+# Stage 1: train on real matched MSG/MTG pairs without augmentation.
 trainer:
-  target: trainer.TrainerSDTurboSR
+  target: training.trainers.Stage1Trainer
 
 sd_pipe:
   target: diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion.StableDiffusionPipeline
@@ -130,6 +131,7 @@ discriminator:
     addition_embed_type_num_heads: 64
 
 degradation:
+  enabled: False
   sf: 4
   # the first degradation process
   resize_prob: [0.2, 0.7, 0.1]  # up, down, keep
@@ -183,13 +185,14 @@ data:
       final_sinc_prob: 0.8
 
       gt_size: ${degradation.gt_size}
-      use_hflip: True
+      scale: ${degradation.sf}
+      use_hflip: False
       use_rot: False
-      random_crop: True
+      random_crop: False
   val:
     type: base
     params:
-      dir_path: /share/data/drive_3/hanan/climate_data/MTG_MSG_train_data/test_LR
+      dir_path: /share/data/drive_3/hanan/climate_data/MTG_MSG_train_data/test_LR_128
       transform_type: default
       transform_kwargs:
           mean: 0.0
@@ -204,6 +207,7 @@ data:
       recursive: False
 
 train:
+  stage: 1
   # predict started inverser
   start_mode: True
   # learning rate

@@ -22,7 +22,8 @@
        width="100%" />
 </div>
 
-This repository contains the inference code used for cloud microphysics super-resolution.
+This repository contains data-generation, training, inference, and evaluation
+code for cloud microphysics super-resolution.
 
 ## Runtime Requirements
 
@@ -56,9 +57,86 @@ pip install -e ".[torch]"
 pip install -r requirements.txt
 ```
 
+## Data Generation
+
+The code-only MSG/MTG preprocessing workflow is under
+[`data_generation/msg_mtg`](data_generation/msg_mtg). It includes raw-product
+discovery, Satpy calibration, projection alignment, paired patch extraction,
+train/test splitting, 4x input resizing, and dataset verification. Raw
+satellite files and generated images are not stored in Git.
+
+Install its satellite-reader dependencies separately when the training
+environment does not already provide them:
+
+```bash
+pip install -r data_generation/msg_mtg/requirements.txt
+```
+
+## Two-Stage Training
+
+Training is controlled by explicit stage-aware configs. The loader validates
+the stage, dataset type, and augmentation setting before initializing GPUs, so
+the old manual comment/uncomment workflow is no longer required.
+
+| Stage | Supervision | Dataset type | Augmentation |
+|---|---|---|---|
+| Stage 1 | Real matched LR/HR sensor pairs | `realesrgan_paired` | Disabled |
+| Stage 2 | HR-only imagery initialized from Stage 1 | `realesrgan` | Real-ESRGAN degradation enabled |
+
+Stage 1 preserves each matched pair. Synthetic blur, random resize, noise, JPEG,
+sinc filtering, random crop, flip, and rotation are disabled. The paired loader
+only performs the required deterministic 4x resize of the observed LR image.
+
+Train Stage 1 on SEVIRI/VIIRS:
+
+```bash
+python main.py \
+  --cfg_path configs/sd_turbo-sr-ldis-pairwise.yaml \
+  --save_dir runs/seviri_viirs_stage1
+```
+
+Train Stage 1 on MSG/MTG:
+
+```bash
+python main.py \
+  --cfg_path configs/sd_turbo-sr-ldis-pairwise-msg-mtg.yaml \
+  --save_dir runs/msg_mtg_stage1
+```
+
+Stage 2 starts from a selected Stage 1 checkpoint and keeps the complete
+Real-ESRGAN synthetic degradation pipeline active. Pass `--init_ckpt` to avoid
+editing a machine-specific checkpoint path in the YAML.
+
+Train Stage 2 on VIIRS HR imagery:
+
+```bash
+python main.py \
+  --cfg_path configs/sd-turbo-sr-ldis.yaml \
+  --init_ckpt /path/to/seviri_viirs_stage1/ckpts/model_50000.pth \
+  --save_dir runs/seviri_viirs_stage2
+```
+
+Train Stage 2 on MTG HR imagery:
+
+```bash
+python main.py \
+  --cfg_path configs/sd-turbo-sr-ldis-msg-mtg.yaml \
+  --init_ckpt /path/to/msg_mtg_stage1/ckpts/model_50000.pth \
+  --save_dir runs/msg_mtg_stage2
+```
+
+When more than one GPU is visible, launch with `torchrun` and the desired
+process count. To run a single process, expose one GPU with
+`CUDA_VISIBLE_DEVICES`.
+
+The Stage 2 connection is parameter initialization from Stage 1, not an
+image-output cascade. Stage 2 consumes HR images and creates its LR inputs
+online using blur, resize, Gaussian/Poisson noise, JPEG, and sinc-filter
+augmentation.
+
 ## External Assets Needed
 
-Inference and evaluation require external model assets that are not checked into this repo:
+Training, inference, and evaluation require external model assets that are not checked into this repo:
 
 - A local SD-Turbo model directory
 - A noise predictor checkpoint passed with `--started_ckpt_path`
